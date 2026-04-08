@@ -6,7 +6,7 @@ Build and Package KKChart Client (Windows)
 $ErrorActionPreference = "Stop"
 
 $ProjectRoot = "c:\Users\kkk\Desktop\my\KKChart"
-$ClientDir = "$ProjectRoot\client\kkchart_client"
+$ClientDir = "$ProjectRoot\client"
 $ReleaseDir = "$ProjectRoot\release"
 $BuildDir = "$ClientDir\build\windows\x64\runner\Release"
 $Version = "1.0.0"

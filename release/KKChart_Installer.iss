@@ -1,4 +1,4 @@
-﻿[Setup]
+[Setup]
 AppName=KKChart
 AppVersion=1.0.0
 DefaultDirName={autopf}\KKChart
@@ -13,7 +13,7 @@ ArchitecturesInstallIn64BitMode=x64
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
-Source: "c:\Users\kkk\Desktop\my\KKChart\client\kkchart_client\build\windows\x64\runner\Release\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "c:\Users\kkk\Desktop\my\KKChart\client\build\windows\x64\runner\Release\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 
 [Icons]
 Name: "{group}\KKChart"; Filename: "{app}\kkchart_client.exe"
