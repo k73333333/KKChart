@@ -49,7 +49,7 @@ flutter pub get
 > 1. 打开终端（无需管理员权限），确保已执行 `flutter pub get`。
 > 2. 在项目根目录执行环境修复脚本：
 >    ```powershell
->    .\create_junctions.ps1
+>    .\fix_symlinks.ps1
 >    ```
 >    *(该脚本会自动读取依赖并创建安全的目录联接 Junction，从而完美绕过系统的软链接拦截)*
 > 3. 再次运行 `flutter run -d windows` 或构建命令即可顺利通过。

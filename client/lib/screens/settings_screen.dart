@@ -28,48 +28,93 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
   }
 
   void _loadSettings() async {
-    final apiUrl = await DatabaseHelper.instance.getSetting('ai_api_url') ?? '';
-    final apiKey = await DatabaseHelper.instance.getSetting('ai_api_key') ?? '';
-    final modelName =
-        await DatabaseHelper.instance.getSetting('ai_model_name') ?? '';
+    try {
+      final apiUrl = await DatabaseHelper.instance.getSetting('ai_api_url') ?? '';
+      final apiKey = await DatabaseHelper.instance.getSetting('ai_api_key') ?? '';
+      final modelName =
+          await DatabaseHelper.instance.getSetting('ai_model_name') ?? '';
 
-    setState(() {
-      _apiUrlController.text = apiUrl;
-      _apiKeyController.text = apiKey;
-      _modelNameController.text = modelName;
-      _isLoading = false;
-    });
+      if (!mounted) return;
+      setState(() {
+        _apiUrlController.text = apiUrl;
+        _apiKeyController.text = apiKey;
+        _modelNameController.text = modelName;
+        _isLoading = false;
+      });
+    } catch (e) {
+      print("***方法报错/接口请求失败: _loadSettings - $e");
+      if (!mounted) return;
+      setState(() {
+        _isLoading = false;
+      });
+      showDialog(
+        context: context,
+        builder: (context) {
+          return ContentDialog(
+            title: const Text('提示'),
+            content: Text('加载配置失败: $e'),
+            actions: [
+              FilledButton(
+                child: const Text('我知道了'),
+                onPressed: () => Navigator.pop(context),
+              ),
+            ],
+          );
+        },
+      );
+    }
   }
 
   void _saveSettings() async {
-    await DatabaseHelper.instance.saveSetting(
-      'ai_api_url',
-      _apiUrlController.text,
-    );
-    await DatabaseHelper.instance.saveSetting(
-      'ai_api_key',
-      _apiKeyController.text,
-    );
-    await DatabaseHelper.instance.saveSetting(
-      'ai_model_name',
-      _modelNameController.text,
-    );
+    try {
+      await DatabaseHelper.instance.saveSetting(
+        'ai_api_url',
+        _apiUrlController.text,
+      );
+      await DatabaseHelper.instance.saveSetting(
+        'ai_api_key',
+        _apiKeyController.text,
+      );
+      await DatabaseHelper.instance.saveSetting(
+        'ai_model_name',
+        _modelNameController.text,
+      );
 
-    showDialog(
-      context: context,
-      builder: (context) {
-        return ContentDialog(
-          title: const Text('保存成功'),
-          content: const Text('AI 配置已成功更新到本地存储。'),
-          actions: [
-            FilledButton(
-              child: const Text('关闭'),
-              onPressed: () => Navigator.pop(context),
-            ),
-          ],
-        );
-      },
-    );
+      if (!mounted) return;
+      showDialog(
+        context: context,
+        builder: (context) {
+          return ContentDialog(
+            title: const Text('保存成功'),
+            content: const Text('AI 配置已成功更新到本地存储。'),
+            actions: [
+              FilledButton(
+                child: const Text('关闭'),
+                onPressed: () => Navigator.pop(context),
+              ),
+            ],
+          );
+        },
+      );
+    } catch (e) {
+      print("***方法报错/接口请求失败: _saveSettings - $e");
+      if (!mounted) return;
+      showDialog(
+        context: context,
+        builder: (context) {
+          return ContentDialog(
+            title: const Text('保存失败'),
+            content: Text('配置保存失败: $e'),
+            actions: [
+              FilledButton(
+                child: const Text('关闭'),
+                onPressed: () => Navigator.pop(context),
+              ),
+            ],
+          );
+        },
+      );
+    }
   }
 
   void _exportLogs() async {

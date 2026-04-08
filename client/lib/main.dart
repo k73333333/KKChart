@@ -4,8 +4,8 @@ import 'package:window_manager/window_manager.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hotkey_manager/hotkey_manager.dart';
 import 'screens/dashboard_screen.dart';
-import 'screens/gallery_screen.dart';
 import 'screens/settings_screen.dart';
+import 'screens/history_screen.dart';
 import 'utils/logger_helper.dart';
 
 void main() async {
@@ -103,14 +103,14 @@ class _MainLayoutState extends State<MainLayout> {
         displayMode: PaneDisplayMode.compact,
         items: [
           PaneItem(
-            icon: const Icon(FluentIcons.add),
-            title: const Text('新建图表'),
+            icon: const Icon(FluentIcons.home),
+            title: const Text('工作台'),
             body: const DashboardScreen(),
           ),
           PaneItem(
-            icon: const Icon(FluentIcons.list),
-            title: const Text('图表画廊'),
-            body: const GalleryScreen(),
+            icon: const Icon(FluentIcons.history),
+            title: const Text('历史记录'),
+            body: const HistoryScreen(),
           ),
         ],
         footerItems: [

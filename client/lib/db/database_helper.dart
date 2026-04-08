@@ -1,4 +1,5 @@
 import 'package:sqflite/sqflite.dart';
+import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'dart:io';
@@ -17,6 +18,13 @@ class DatabaseHelper {
   }
 
   Future<Database> _initDB(String filePath) async {
+    // Windows/Linux/macOS 桌面端需要使用 sqflite_common_ffi 初始化
+    if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {
+      // 指定 sqlite3 dll 的加载路径，以防自带的 C 库缺失导致找不到符号
+      sqfliteFfiInit();
+      databaseFactory = databaseFactoryFfi;
+    }
+
     Directory docsDirectory = await getApplicationDocumentsDirectory();
     String path = join(docsDirectory.path, filePath);
     
